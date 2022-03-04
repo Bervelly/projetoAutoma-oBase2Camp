@@ -5,12 +5,16 @@ import org.openqa.selenium.By;
 
 public class ViewIssuesPage extends PageBase {
     // Mapeamento de Seletores
+
     By searchReport = By.name("search");
     By clickSearch = By.className("button-small");
     By editPencil = By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[2]/a/img");
     By editSummary = By.name("summary");
     By clickEditSummary = By.className("button");
     By deleteReport = By.xpath("//*[@id=\"buglist\"]/tbody/tr[5]/td[1]/input");
+    By resolveReport = By.name("action");
+    By chooseResolve = By.name("resolution");
+    By buttonResolve = By.className("button");
     By selectDelete = By.name("action");
     By clickOk = By.className("button");
     By deleteIssues = By.className("button");
@@ -43,5 +47,14 @@ public class ViewIssuesPage extends PageBase {
     }
     public void clickDeleteIssue(){
         click(deleteIssues);
+    }
+    public void checkResolve(String resolveIssue){
+        comboBoxSelectByVisibleText(resolveReport,resolveIssue);
+    }
+    public void selectChooseResolve (String chooseField){
+        comboBoxSelectByVisibleText(chooseResolve, chooseField);
+    }
+    public void buttonResolveIssue(){
+        click(buttonResolve);
     }
 }

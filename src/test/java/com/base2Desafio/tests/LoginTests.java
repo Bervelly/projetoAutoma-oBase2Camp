@@ -15,7 +15,6 @@ public class LoginTests extends TestBase {
     LoginPage loginPage;
     HomePage homePage;
     ReportIssuePage reportIssuePage;
-    ManagePage managePage;
     ViewIssuesPage viewIssuesPage;
 
     //Tests
@@ -74,10 +73,22 @@ public class LoginTests extends TestBase {
         viewIssuesPage.fillReporter("Bervelly1");
         viewIssuesPage.selectClickSearch();
 
+       // Resolver ocorrência
+        homePage.clickViewIssues();
+        viewIssuesPage.fillReporter("Bervelly1");
+        viewIssuesPage.selectClickSearch();
+        viewIssuesPage.clickDelete();
+        viewIssuesPage.checkResolve("Resolve");
+        viewIssuesPage.selectOk();
+        viewIssuesPage.selectChooseResolve("not fixable");
+        viewIssuesPage.buttonResolveIssue();
+        viewIssuesPage.fillReporter("Bervelly1");
+        viewIssuesPage.selectClickSearch();
 
-       // Gerenciando os projetos do Mantis
-        homePage.clickManage();
-        managePage = new ManagePage();
-        managePage.clickManageProjects();
+
+
+
+
+
     }
 }
