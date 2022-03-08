@@ -1,17 +1,20 @@
 package com.base2Desafio.pages;
 
 import com.base2Desafio.bases.PageBase;
+import com.base2Desafio.utils.DriverUtils;
 import org.openqa.selenium.By;
 
 public class ViewIssuesPage extends PageBase {
     // Mapeamento de Seletores
 
-    By searchReport = By.name("search");
-    By clickSearch = By.className("button-small");
+    By searchReport = By.id("reporter_id_filter");
+    By selectReporter = By.name("reporter_id[]");
+    By fillSearch = By.name("search");
+    By filter = By.name("filter");
     By editPencil = By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[2]/a/img");
     By editSummary = By.name("summary");
     By clickEditSummary = By.className("button");
-    By deleteReport = By.xpath("//*[@id=\"buglist\"]/tbody/tr[5]/td[1]/input");
+    By deleteReport = By.cssSelector("#buglist > tbody > tr:nth-child(4) > td:nth-child(1) > input[type=checkbox]");
     By resolveReport = By.name("action");
     By chooseResolve = By.name("resolution");
     By buttonResolve = By.className("button");
@@ -21,15 +24,22 @@ public class ViewIssuesPage extends PageBase {
 
 
     // Actions
-    public void fillReporter (String search){
-        sendKeys(searchReport, search);
+    public void fillReporter(){
+        click(searchReport);
     }
-    public void selectClickSearch(){
-        click(clickSearch);
+    public void selectClickReporter(String reporterI){
+        comboBoxSelectByVisibleText(selectReporter, reporterI);
+    }
+    public void selectFilter(){
+        click(filter);
+    }
+    public void fieldFillSearch(String searchFill){
+        sendKeys(fillSearch, searchFill);
     }
     public void  editReport(){
         click(editPencil);
     }
+
     public void editNewSummary(String newName){
         sendKeys(editSummary, newName);
     }
@@ -57,4 +67,6 @@ public class ViewIssuesPage extends PageBase {
     public void buttonResolveIssue(){
         click(buttonResolve);
     }
+
+
 }

@@ -1,6 +1,4 @@
 package com.base2Desafio.flows;
-
-
 import com.base2Desafio.pages.LoginPage;
 
 public class LoginFlows {

@@ -15,7 +15,7 @@ Passo a passo: - clicar no campo Report Issue;
                - preencher o campo description.
                - clicar no botão Submit Report
                - ir para a página View Issues;
-               - clicar no campo search e buscar o bug reportado pelo título descrito no Summary.
+               - clicar no campo reporter, selecionar na lista o nome "bervelly.nobrega" e buscar o bug reportado pelo título descrito no Summary.
     
 Resultado esperado: bug reportado exibido na lista de bugs reportados na página View Issues.
 
@@ -34,14 +34,14 @@ Título: Editar ocorrência de bug
 Descrição: usuário conseguir editar uma ocorrência de bug já criada
 Pré-condição: estar logado no sistema Mantis
 Passo a passo: - ir para a página View Issues;
-               - clicar no campo search e pesquisar o bug a ser editado pelo título descrito no Summary;
+               - clicar no campo reporter, selecionar na lista o nome "bervelly.nobrega" e buscar o bug reportado a ser editado pelo título descrito no Summary;
                - clicar na opção de edit;
                
 Resultado esperado: aparece a tela de updating issue.
 
                - editar o campo summary com o novo valor a ser informado;
                - clicar no botão update information;
-               - clicar no campo search e buscar o bug editado pelo novo título informado no Summary.
+               - clicar no campo reporter, selecionar na lista o nome "bervelly.nobrega" e buscar o bug editado pelo novo título descrito no Summary.
     
 Resultado esperado: bug editado exibido na lista de bugs reportados na página View Issues com as novas informações.
 
