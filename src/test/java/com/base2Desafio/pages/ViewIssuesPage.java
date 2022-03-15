@@ -1,7 +1,6 @@
 package com.base2Desafio.pages;
 
 import com.base2Desafio.bases.PageBase;
-import com.base2Desafio.utils.DriverUtils;
 import org.openqa.selenium.By;
 
 public class ViewIssuesPage extends PageBase {
@@ -14,7 +13,7 @@ public class ViewIssuesPage extends PageBase {
     By editPencil = By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[2]/a/img");
     By editSummary = By.name("summary");
     By clickEditSummary = By.className("button");
-    By deleteReport = By.cssSelector("#buglist > tbody > tr:nth-child(4) > td:nth-child(1) > input[type=checkbox]");
+    By chooseCheckBox = By.cssSelector("#buglist > tbody > tr:nth-child(4) > td:nth-child(1) > input[type=checkbox]");
     By resolveReport = By.name("action");
     By chooseResolve = By.name("resolution");
     By buttonResolve = By.className("button");
@@ -46,8 +45,8 @@ public class ViewIssuesPage extends PageBase {
     public void clickEdit(){
         click(clickEditSummary);
     }
-    public void clickDelete(){
-        click(deleteReport);
+    public void clickCheckBox(){
+        click(chooseCheckBox);
     }
     public void clickSelectDelete(String valueDelete){
         comboBoxSelectByVisibleText(selectDelete,valueDelete);

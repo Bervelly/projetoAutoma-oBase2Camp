@@ -100,8 +100,8 @@ public class PageBase {
         comboBox.selectByVisibleText(text);
     }
 
-    protected String getText(By locator){
-        String text = waitForElement(locator).getText();
+    public String getText(By by){
+        String text = waitForElement(by).getText();
         return text;
     }
 

@@ -38,7 +38,6 @@ Passo a passo: - ir para a página View Issues;
                - clicar na opção de edit;
                
 Resultado esperado: aparece a tela de updating issue.
-
                - editar o campo summary com o novo valor a ser informado;
                - clicar no botão update information;
                - clicar no campo reporter, selecionar na lista o nome "bervelly.nobrega" e buscar o bug editado pelo novo título descrito no Summary.

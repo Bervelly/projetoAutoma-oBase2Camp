@@ -1,27 +1,41 @@
 package com.base2Desafio.tests;
 
+import com.base2Desafio.bases.PageBase;
 import com.base2Desafio.bases.TestBase;
 import com.base2Desafio.pages.*;
 import com.base2Desafio.utils.DriverUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 
-public class LoginTests extends TestBase {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class MantisTests extends TestBase {
     //Objects
-    HomePage homePage;
-    ReportIssuePage reportIssuePage;
-    ViewIssuesPage viewIssuesPage;
+    private HomePage homePage;
+    private ReportIssuePage reportIssuePage;
+    private ViewIssuesPage viewIssuesPage;
+    private PageBase page;
+    private String summaryEdited = "Treinamento base"+ RandomStringUtils.randomNumeric(2);
+
+
+    @Before
+    public void start(){
+        homePage = new HomePage();
+        page = new PageBase();
+    }
 
     //Tests
     @Test
-    public void createReport() {
+    public void test_1_createReport() {
 
         //Selecionando a opção de criar ocorrência
-        homePage = new HomePage();
-        homePage.clickReportIssue();
         String summary = "Treinamento base"+ RandomStringUtils.randomNumeric(2);
+        homePage.clickReportIssue();
+
 
         //Preenchendo campos de criar ocorrência
         reportIssuePage = new ReportIssuePage();
@@ -42,17 +56,16 @@ public class LoginTests extends TestBase {
         viewIssuesPage = new ViewIssuesPage();
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
-        viewIssuesPage.selectFilter();
         viewIssuesPage.fieldFillSearch(summary);
-        Assert.assertEquals(summary, DriverUtils.DRIVER.findElement(By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[11]")).getText());
+        viewIssuesPage.selectFilter();
+        Assert.assertEquals(summary, page.getText(By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[11]")));
 
 
     }
 
     @Test
-    public void invalidCreateReport() {
-
-        homePage = new HomePage();
+    public void test_2_invalidCreateReport() {
+        // Criando ocorrência inválida
         homePage.clickReportIssue();
         reportIssuePage = new ReportIssuePage();
         reportIssuePage.clickCategory();
@@ -65,21 +78,20 @@ public class LoginTests extends TestBase {
         reportIssuePage.chooseAssign("bervelly.nobrega");
         reportIssuePage.fillDescription("descrevendo o teste");
         reportIssuePage.clickReport();
-        Assert.assertEquals("APPLICATION ERROR #11",DriverUtils.DRIVER.findElement(By.className("form-title")).getText());
+        Assert.assertEquals("APPLICATION ERROR #11",page.getText(By.className("form-title")));
 
     }
 
     @Test
-    public void editReport() {
-        String summary = "Treinamento base"+ RandomStringUtils.randomNumeric(2);
+    public void test_3_editReport() {
+
 
         // Editar ocorrências
         viewIssuesPage = new ViewIssuesPage();
-        homePage = new HomePage();
         homePage.clickViewIssues();
         viewIssuesPage.editReport();
         DriverUtils.DRIVER.findElement(By.name("summary")).clear();
-        viewIssuesPage.editNewSummary(summary);
+        viewIssuesPage.editNewSummary(summaryEdited);
         viewIssuesPage.clickEdit();
 
         // Verificando ocorrências editadas
@@ -87,21 +99,20 @@ public class LoginTests extends TestBase {
         viewIssuesPage = new ViewIssuesPage();
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
+        viewIssuesPage.fieldFillSearch(summaryEdited);
         viewIssuesPage.selectFilter();
-        viewIssuesPage.fieldFillSearch(summary);
-        Assert.assertEquals(summary, DriverUtils.DRIVER.findElement(By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[11]")).getText());
+        Assert.assertEquals(summaryEdited, page.getText(By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[11]")));
     }
 
     @Test
-    public void deleteReport() {
+    public void test_5_deleteReport() {
 
         // Excluir ocorrências
         viewIssuesPage = new ViewIssuesPage();
-        homePage = new HomePage();
         homePage.clickViewIssues();
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
-        viewIssuesPage.clickDelete();
+        viewIssuesPage.clickCheckBox();
         viewIssuesPage.clickSelectDelete("Delete");
         viewIssuesPage.selectOk();
         viewIssuesPage.clickDeleteIssue();
@@ -109,19 +120,21 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    public void resolveReport() {
+    public void test_4_resolveReport() {
 
         // Resolver ocorrência
         viewIssuesPage = new ViewIssuesPage();
-        homePage = new HomePage();
         homePage.clickViewIssues();
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
-        viewIssuesPage.clickDelete();
+        viewIssuesPage.selectFilter();
+        viewIssuesPage.clickCheckBox();
         viewIssuesPage.checkResolve("Resolve");
         viewIssuesPage.selectOk();
         viewIssuesPage.selectChooseResolve("not fixable");
         viewIssuesPage.buttonResolveIssue();
+        }
+
 
     }
-}
+

@@ -27,6 +27,7 @@ public class TestBase {
         loginPage.fillUsername(GlobalParameters.USERNAME);
         loginPage.fillPassword(GlobalParameters.SENHA_GERAL);
         loginPage.clickLogin();
+
     }
 
     @After
