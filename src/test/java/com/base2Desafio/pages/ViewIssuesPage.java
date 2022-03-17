@@ -1,6 +1,7 @@
 package com.base2Desafio.pages;
 
 import com.base2Desafio.bases.PageBase;
+import com.base2Desafio.utils.DriverUtils;
 import org.openqa.selenium.By;
 
 public class ViewIssuesPage extends PageBase {
@@ -10,16 +11,14 @@ public class ViewIssuesPage extends PageBase {
     By selectReporter = By.name("reporter_id[]");
     By fillSearch = By.name("search");
     By filter = By.name("filter");
-    By editPencil = By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[2]/a/img");
+    By editPencil = By.xpath("//*[@id='buglist']/child::tbody/tr//img[@title='Edit']");
     By editSummary = By.name("summary");
     By clickEditSummary = By.className("button");
-    By chooseCheckBox = By.cssSelector("#buglist > tbody > tr:nth-child(4) > td:nth-child(1) > input[type=checkbox]");
+    By chooseCheckBox = By.xpath("//*[@id='buglist']/tbody//input[@name='bug_arr[]']");
     By resolveReport = By.name("action");
-    By chooseResolve = By.name("resolution");
-    By buttonResolve = By.className("button");
     By selectDelete = By.name("action");
     By clickOk = By.className("button");
-    By deleteIssues = By.className("button");
+
 
 
     // Actions
@@ -29,7 +28,7 @@ public class ViewIssuesPage extends PageBase {
     public void selectClickReporter(String reporterI){
         comboBoxSelectByVisibleText(selectReporter, reporterI);
     }
-    public void selectFilter(){
+    public void applyFilter(){
         click(filter);
     }
     public void fieldFillSearch(String searchFill){
@@ -54,17 +53,13 @@ public class ViewIssuesPage extends PageBase {
     public void selectOk(){
         click(clickOk);
     }
-    public void clickDeleteIssue(){
-        click(deleteIssues);
-    }
+
     public void checkResolve(String resolveIssue){
         comboBoxSelectByVisibleText(resolveReport,resolveIssue);
     }
-    public void selectChooseResolve (String chooseField){
-        comboBoxSelectByVisibleText(chooseResolve, chooseField);
-    }
-    public void buttonResolveIssue(){
-        click(buttonResolve);
+
+    public int getListSize(){
+        return DriverUtils.DRIVER.findElements(chooseCheckBox).size();
     }
 
 

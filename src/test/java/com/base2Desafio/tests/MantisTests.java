@@ -7,18 +7,18 @@ import com.base2Desafio.utils.DriverUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public class MantisTests extends TestBase {
     //Objects
     private HomePage homePage;
     private ReportIssuePage reportIssuePage;
     private ViewIssuesPage viewIssuesPage;
     private PageBase page;
+    private DeletePage deletePage;
+    private ResolveIssuesPage resolveIssuesPage;
     private String summaryEdited = "Treinamento base"+ RandomStringUtils.randomNumeric(2);
 
 
@@ -30,7 +30,7 @@ public class MantisTests extends TestBase {
 
     //Tests
     @Test
-    public void test_1_createReport() {
+    public void test_createReporter() {
 
         //Selecionando a opção de criar ocorrência
         String summary = "Treinamento base"+ RandomStringUtils.randomNumeric(2);
@@ -57,14 +57,14 @@ public class MantisTests extends TestBase {
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
         viewIssuesPage.fieldFillSearch(summary);
-        viewIssuesPage.selectFilter();
+        viewIssuesPage.applyFilter();
         Assert.assertEquals(summary, page.getText(By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[11]")));
 
 
     }
 
     @Test
-    public void test_2_invalidCreateReport() {
+    public void test_invalidCreateReport() {
         // Criando ocorrência inválida
         homePage.clickReportIssue();
         reportIssuePage = new ReportIssuePage();
@@ -83,7 +83,7 @@ public class MantisTests extends TestBase {
     }
 
     @Test
-    public void test_3_editReport() {
+    public void test_editReport() {
 
 
         // Editar ocorrências
@@ -100,39 +100,55 @@ public class MantisTests extends TestBase {
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
         viewIssuesPage.fieldFillSearch(summaryEdited);
-        viewIssuesPage.selectFilter();
+        viewIssuesPage.applyFilter();
         Assert.assertEquals(summaryEdited, page.getText(By.xpath("//*[@id=\"buglist\"]/tbody/tr[4]/td[11]")));
     }
 
     @Test
-    public void test_5_deleteReport() {
+    public void test_deleteReport() {
 
         // Excluir ocorrências
         viewIssuesPage = new ViewIssuesPage();
+        deletePage = new DeletePage();
         homePage.clickViewIssues();
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
+        viewIssuesPage.applyFilter();
         viewIssuesPage.clickCheckBox();
         viewIssuesPage.clickSelectDelete("Delete");
         viewIssuesPage.selectOk();
-        viewIssuesPage.clickDeleteIssue();
+        String name = deletePage.getName();
+        deletePage.clickDeleteIssue();
+
+        // Verificando ocorrências deletadas
+        viewIssuesPage.fieldFillSearch(name);
+        viewIssuesPage.applyFilter();
+        Assert.assertEquals(0, viewIssuesPage.getListSize());
 
     }
 
     @Test
-    public void test_4_resolveReport() {
+    public void test_resolveReport() {
 
         // Resolver ocorrência
+
         viewIssuesPage = new ViewIssuesPage();
+        resolveIssuesPage = new ResolveIssuesPage();
         homePage.clickViewIssues();
         viewIssuesPage.fillReporter();
         viewIssuesPage.selectClickReporter("bervelly.nobrega");
-        viewIssuesPage.selectFilter();
+        viewIssuesPage.applyFilter();
         viewIssuesPage.clickCheckBox();
         viewIssuesPage.checkResolve("Resolve");
         viewIssuesPage.selectOk();
-        viewIssuesPage.selectChooseResolve("not fixable");
-        viewIssuesPage.buttonResolveIssue();
+        resolveIssuesPage.selectChooseResolve("not fixable");
+        String name_resolve = resolveIssuesPage.getNameResolve();
+        resolveIssuesPage.buttonResolveIssue();
+
+        // Verificando ocorrências resolvidas
+        viewIssuesPage.fieldFillSearch(name_resolve);
+        viewIssuesPage.applyFilter();
+        Assert.assertEquals(1, viewIssuesPage.getListSize());
         }
 
 
