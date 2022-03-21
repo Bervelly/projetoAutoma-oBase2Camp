@@ -39,14 +39,7 @@ public class MantisTests extends TestBase {
 
         //Preenchendo campos de criar ocorrência
         reportIssuePage = new ReportIssuePage();
-        reportIssuePage.clickCategory();
-        reportIssuePage.selectCategoryOptions("[All Projects] a");
-        reportIssuePage.clickReproducibility();
-        reportIssuePage.selectReproducibilityOptions("always");
-        reportIssuePage.clickSeverity();
-        reportIssuePage.selectSeverityOptions("feature");
-        reportIssuePage.clickSelectAssign();
-        reportIssuePage.chooseAssign("bervelly.nobrega");
+        fillingCommonsFieldOnOccurrence();
         reportIssuePage.fillSummary(summary);
         reportIssuePage.fillDescription("descrevendo o teste");
         reportIssuePage.clickReport();
@@ -63,11 +56,7 @@ public class MantisTests extends TestBase {
 
     }
 
-    @Test
-    public void test_invalidCreateReport() {
-        // Criando ocorrência inválida
-        homePage.clickReportIssue();
-        reportIssuePage = new ReportIssuePage();
+    private void fillingCommonsFieldOnOccurrence() {
         reportIssuePage.clickCategory();
         reportIssuePage.selectCategoryOptions("[All Projects] a");
         reportIssuePage.clickReproducibility();
@@ -76,6 +65,14 @@ public class MantisTests extends TestBase {
         reportIssuePage.selectSeverityOptions("feature");
         reportIssuePage.clickSelectAssign();
         reportIssuePage.chooseAssign("bervelly.nobrega");
+    }
+
+    @Test
+    public void test_invalidCreateReport() {
+        // Criando ocorrência inválida
+        homePage.clickReportIssue();
+        reportIssuePage = new ReportIssuePage();
+        fillingCommonsFieldOnOccurrence();
         reportIssuePage.fillDescription("descrevendo o teste");
         reportIssuePage.clickReport();
         Assert.assertEquals("APPLICATION ERROR #11",page.getText(By.className("form-title")));
